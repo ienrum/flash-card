@@ -1,9 +1,23 @@
-<script setup lang="ts">
-import PracticePage from "./components/PracticePage.vue";
+<script lang="ts">
+import Practice from '@/pages/Practice.vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  components: {
+    Practice,
+  },
+});
 </script>
 
 <template>
-  <PracticePage />
+  <div class="h-screen bg-slate-200">
+    <Practice title="영어 회화 1" />
+  </div>
 </template>
 
-<style scoped></style>
+<style>
+#app {
+  background-color: #f3f4f6;
+  display: fixed;
+}
+</style>
