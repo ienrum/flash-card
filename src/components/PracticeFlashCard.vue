@@ -38,6 +38,13 @@ export default defineComponent({
 .flashcard {
   transform-style: preserve-3d;
   transition: all 0.5s ease;
+  & h1 {
+    width: 500px;
+    height: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+  }
 }
 .question {
   backface-visibility: hidden;
