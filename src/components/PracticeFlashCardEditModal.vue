@@ -1,25 +1,42 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import PracticeButton from './PracticeButton.vue';
+
+import { useFlashCardsStore } from '@/stores/flashCards';
 export default defineComponent({
   components: {
     PracticeButton,
   },
   props: {
-    answer: {
-      type: String,
+    card: {
+      type: Object,
       required: true,
     },
-    question: {
-      type: String,
-      required: true,
+  },
+  data() {
+    return {
+      flashCardsStore: useFlashCardsStore(),
+      question: this.card.question,
+      answer: this.card.answer,
+    };
+  },
+  methods: {
+    saveCard() {
+      this.flashCardsStore.updateCard({
+        id: this.card.id,
+        question: this.question,
+        answer: this.answer,
+        isEdit: false,
+      });
     },
   },
 });
 </script>
 
 <template>
-  <form class="containerForEdit flex flex-row items-center justify-around">
+  <form
+    class="containerForEdit flex flex-row items-center justify-around"
+    @submit.prevent="() => saveCard()">
     <div
       class="containerForInputs flex h-full w-full items-center justify-around rounded-2xl bg-slate-300 p-5">
       <div
@@ -28,6 +45,11 @@ export default defineComponent({
         <textarea
           name="question"
           id="question"
+          @input="
+            ($event: Event) => {
+              question = ($event.target as HTMLTextAreaElement).value;
+            }
+          "
           class="h-full w-full rounded-2xl border-4 border-dashed bg-slate-300 p-3 text-xl"
           >{{ question }}</textarea
         >
@@ -38,6 +60,11 @@ export default defineComponent({
         <textarea
           name="answer"
           id="answer"
+          @input="
+            ($event: Event) => {
+              answer = ($event.target as HTMLTextAreaElement).value;
+            }
+          "
           class="h-full w-full rounded-2xl border-4 border-dashed bg-slate-300 p-3 text-xl"
           >{{ answer }}</textarea
         >
